@@ -1,39 +1,92 @@
+// ===== DOM ELEMENTS =====
+const startBtn = document.getElementById('btn');
+const computerResult = document.querySelector('.computerResult');
+const humanResult = document.querySelector('.humanResult');
+const btnDiv = document.querySelector('.button-div');
 
-const startBtn = document.getElementById('btn')
-const computerResult = document.querySelector('.computerResult')
-const humanResult = document.querySelector('.humanResult')
-startBtn.addEventListener('click', computerChoice)
+// Score display elements
+const scoreBoard = document.createElement('div');
+const humanScoreEl = document.createElement('p');
+const computerScoreEl = document.createElement('p');
 
+// Game buttons
+const rockBtn = document.createElement('button');
+const paperBtn = document.createElement('button');
+const scissorsBtn = document.createElement('button');
 
+// ===== GAME STATE =====
+let humanScore = 0;
+let computerScore = 0;
 
+// ===== FUNCTIONS =====
 function computerChoice() {
-    const options = ["Rock","Paper","Scissors"]
-    const randomNumber = Math.floor(Math.random() * 3)
-    const computerSelect = options[randomNumber]
-    computerResult.textContent = computerSelect
+    const options = ["rock", "paper", "scissors"];
+    const randomIndex = Math.floor(Math.random() * options.length);
+    const choice = options[randomIndex];
 
-    return computerSelect
+    computerResult.textContent = `Computer chose: ${choice}`;
+    return choice;
 }
 
-function getHumanChoice() {
-    const humanChoice = prompt('Please enter one of the displayed option to compete with the system', 'Paper, Scissors Or Rock')
-    humanResult.textContent = humanChoice;
-    return humanChoice
+function updateScoreUI() {
+    humanScoreEl.textContent = `Human Score: ${humanScore}`;
+    computerScoreEl.textContent = `Computer Score: ${computerScore}`;
 }
 
-function playRound(cb1, cb2){
-    const computerSelect = cb1().toLowerCase;
-    const humanSelect = cb2();
-    if (computerSelect !== humanSelect) {
-        
+function playRound(humanSelect) {
+    const computerSelect = computerChoice();
+    humanResult.textContent = `You chose: ${humanSelect}`;
+
+    if (humanSelect === computerSelect) {
+        alert("It's a tie!");
+        return;
     }
+
+    const humanWins =
+        (humanSelect === "rock" && computerSelect === "scissors") ||
+        (humanSelect === "paper" && computerSelect === "rock") ||
+        (humanSelect === "scissors" && computerSelect === "paper");
+
+    if (humanWins) {
+        humanScore++;
+        alert("Human wins this round!");
+    } else {
+        computerScore++;
+        alert("Computer wins this round!");
+    }
+
+    updateScoreUI();
 }
 
-function playGame(){
-    let humanScore = 0;
-    let computerScore = 0;
-    for (let i = 0; i < 5; i++) {
-        playRound(getHumanChoice(), computerChoice());
-        
-    }
+// ===== GAME START =====
+function playGame() {
+    // Reset state
+    humanScore = 0;
+    computerScore = 0;
+
+    // Button labels
+    rockBtn.textContent = "Rock";
+    paperBtn.textContent = "Paper";
+    scissorsBtn.textContent = "Scissors";
+
+    // Score UI
+    updateScoreUI();
+    scoreBoard.appendChild(humanScoreEl);
+    scoreBoard.appendChild(computerScoreEl);
+
+    // Clear previous content (important!)
+    btnDiv.innerHTML = "";
+
+    btnDiv.appendChild(scoreBoard);
+    btnDiv.appendChild(rockBtn);
+    btnDiv.appendChild(paperBtn);
+    btnDiv.appendChild(scissorsBtn);
+
+    // Event listeners (CORRECT)
+    rockBtn.onclick = () => playRound("rock");
+    paperBtn.onclick = () => playRound("paper");
+    scissorsBtn.onclick = () => playRound("scissors");
 }
+
+// Start game
+startBtn.addEventListener('click', playGame);

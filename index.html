@@ -1,22 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock Paper Scissors Game</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock Paper Scissors</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 40px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .button-div {
+            margin-top: 20px;
+        }
+
+        .computerResult,
+        .humanResult {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the game</h1>
-    <h3>You have five round to win our system</h3>
-    <h3>We wish you luck</h3>
 
-    <button id="btn">Start</button>
+    <h1>Rock Paper Scissors</h1>
 
-    <p class="computerResult"></p>
+    <!-- Start Game Button -->
+    <button id="btn">Start Game</button>
+
+    <!-- Results -->
     <p class="humanResult"></p>
-    
-    
-    
+    <p class="computerResult"></p>
+
+    <!-- Buttons + Scoreboard will be injected here -->
+    <div class="button-div"></div>
+
+    <!-- JavaScript -->
     <script src="index.js"></script>
 </body>
 </html>
